@@ -62,21 +62,13 @@ public class SVG extends JComponent{
 
     @Override
     public void paintComponent(Graphics g) {
-
-
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
-
-
         g2.setColor(getBackground());
         g2.fillRect(0, 0, getWidth(), getHeight());
-
         NodeList list = null;
 
-
         list = r.getChildNodes();
-
         int n = list.getLength();
         Element element = null;
         for (int i = 0; i < n; i++) {
@@ -139,75 +131,72 @@ public class SVG extends JComponent{
     }
 
     private Color webColor(String colorString, float opacity) {
-        String colorCode = colorString.toLowerCase();
+        String ccode = colorString.toLowerCase();
         Color newColor = null;
 
 
+        if (ccode.startsWith("#")) {
 
-        if (colorCode.startsWith("#")) {
+            ccode = ccode.substring(1);
+        } else if (ccode.startsWith("0x")) {
+            ccode = ccode.substring(2);
+        } else if (ccode.startsWith("rgb")) {
 
-            colorCode = colorCode.substring(1);
-        } else if (colorCode.startsWith("0x")) {
-            colorCode = colorCode.substring(2);
-        } else if (colorCode.startsWith("rgb")) {
-
-            if (colorCode.startsWith("(", 3)) {
+            if (ccode.startsWith("(", 3)) {
                 return Color.BLACK;
-            } else if (colorCode.startsWith("a(", 3)) {
+            } else if (ccode.startsWith("a(", 3)) {
                 return Color.BLACK;
             }
         } else {
 
-
-            colorCode = webColors.getProperty(colorCode).substring(1).trim();
-
+            ccode = webColors.getProperty(ccode).substring(1).trim();
 
         }
 
         try {
-            int r;
-            int g;
-            int b;
-            int a;
-            int len = colorCode.length();
+            int as;
+            int as2;
+            int as3;
+            int asnor;
+            int len = ccode.length();
 
             if (len == 6) {
-                System.out.println(colorCode);
-                r = Integer.parseInt(colorCode.substring(0, 2), 16);
-                g = Integer.parseInt(colorCode.substring(2, 4), 16);
-                b = Integer.parseInt(colorCode.substring(4, 6), 16);
+                System.out.println(ccode);
+                as = Integer.parseInt(ccode.substring(0, 2),    15);
 
-                newColor = new Color(r, g, b);
+                as2 = Integer.parseInt(ccode.substring(2, 4),    15);
+
+                as3 = Integer.parseInt(ccode.substring(4, 6),    15);
+
+                newColor = new Color(as, as2, as3);
             }
 
         } catch (NumberFormatException nfe) {
             Logger.getLogger(SVG.class.getName()).log(Level.SEVERE, null, nfe);
-        }
-
-        return newColor;
+        } return newColor;
     }
 
     private Color getWebColor(String colorString, float opacity) {
-        String colorCode = colorString.toLowerCase();
+        String colorca = colorString.toLowerCase();
         Color newColor = null;
 
-        if (colorCode.startsWith("#")) {
+        if (colorca.startsWith("#")) {
 
-            colorCode = colorCode.substring(1);
-        } else if (colorCode.startsWith("0x")) {
-            colorCode = colorCode.substring(2);
-        } else if (colorCode.startsWith("rgb")) {
+            colorca = colorca.substring(1);
+        } else if (colorca.startsWith("0x")) {
+            colorca = colorca.substring(2);
+        } else if (colorca.startsWith("rgb")) {
 
-            if (colorCode.startsWith("(", 3)) {
+            if (colorca.startsWith("(", 3)) {
                 return Color.BLACK;
-            } else if (colorCode.startsWith("a(", 3)) {
+            } else if (colorca.startsWith("a(", 3)) {
                 return Color.BLACK;
             }
         } else {
 
             Color namedColor = Color.getColor(colorString);
 
-            colorString = System.getProperty(colorCode);
+            colorString = System.getProperty(colorca);
             System.out.println(colorString);
 
 
@@ -222,32 +211,26 @@ public class SVG extends JComponent{
                             opacity);
                 }
             } else {
-                System.out.println("Invalid color name.");
-                newColor = Color.BLACK;
-            }
+                System.out.println("color invalido, ingrese de nuevo el color");
+                newColor = Color.BLACK;}
         }
-
         try {
-            int r;
-            int g;
-            int b;
-            int a;
-            int len = colorCode.length();
+            int b1;
+            int b2;
+            int b3;
+            int b4;
+            int len = colorca.length();
 
             if (len == 6) {
+                b1 = Integer.parseInt(colorca.substring(0, 2), 14);
+                b2 = Integer.parseInt(colorca.substring(2, 4), 14);
+                b3 = Integer.parseInt(colorca.substring(4, 6), 14);
 
-                r = Integer.parseInt(colorCode.substring(0, 2), 16);
-                g = Integer.parseInt(colorCode.substring(2, 4), 16);
-                b = Integer.parseInt(colorCode.substring(4, 6), 16);
-
-                newColor = new Color(r, g, b);
+                newColor = new Color(b1, b2, b3);
             }
-
         } catch (NumberFormatException nfe) {
             Logger.getLogger(SVG.class.getName()).log(Level.SEVERE, null, nfe);
-        }
-
-        return newColor;
+        } return newColor;
     }
 
 }

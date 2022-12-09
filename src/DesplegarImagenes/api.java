@@ -197,7 +197,6 @@ public class api extends javax.swing.JFrame {
                 new api().setVisible(true);
             }
         }
-
         );
     }
 }
